@@ -1,27 +1,25 @@
 import 'dart:typed_data';
 import 'dart:convert' as convert;
-import 'package:flutter/material.dart';
 
 class BFI {
   var program = "";
   var memory = Int8List(30000);
+  // ignore: non_constant_identifier_names
   var mem_idx = 0;
+  // ignore: non_constant_identifier_names
   var prog_idx = 0;
 
+  // ignore: non_constant_identifier_names
   var out_s = "";
   var out = List<int>();
 
+  // ignore: non_constant_identifier_names
   var input_s = "";
   var input = List<int>();
 
   var loopStack = List<int>();
   var loopIdx = 0;
   void run() {
-    var cmds =
-        ['>', '<', '+', '-', '.', ',', '[', ']'].map((e) => e.codeUnitAt(0));
-    // print(program);
-    // program =
-    //   "-[-]+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.";
     while (prog_idx < program.length) {
       var cmd = String.fromCharCode(program.codeUnitAt(prog_idx));
       //print('cmd: $cmd prog_idx $prog_idx');
@@ -79,10 +77,6 @@ class BFI {
 
     print("str: $str");
     print("out_s $out_s");
-    var encoded =
-        convert.utf8.encode('Lorem ipsum dolor sit amet, consetetur...');
-    var decoded = convert.utf8.decode(encoded);
-    print(decoded);
   }
 
   String charAtIndex(String str, int index) {
@@ -91,11 +85,10 @@ class BFI {
   }
 
   void skipWhile() {
-    //print("skip while");
     prog_idx++;
     var internalLoopCount = 0;
-    // while not match stop requirements
     var cmd = String.fromCharCode(program.codeUnitAt(prog_idx));
+    // while not match stop requirements
     while (!(cmd == ']' && internalLoopCount == 0)) {
       print(prog_idx);
       if (cmd == '[') {
