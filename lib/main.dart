@@ -29,14 +29,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
   String _output = "";
   String _program =
       "++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.";
 
   void _run() {
     setState(() {
-      _counter++;
       var bfi = BFI();
       bfi.program = _program;
       bfi.run();
