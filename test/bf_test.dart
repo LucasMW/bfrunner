@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:bf_runner/bf.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -24,15 +22,6 @@ void main() {
         bfi.out_s == "LA\nLA\n";
     print(bfi.out_s);
     expect(res, true);
-  });
-  test("big enough", () {
-    final program =
-        "++++[>++++++<-]>[>+++++>+++++++<<-]>>++++<[[>[[>>+<<-]<]>>>-]>-[>+>+<<-]>]+++++[>+++++++<<++>-]>.<<.";
-    final bfi = BFI();
-    bfi.program = program;
-    bfi.run();
-    print(bfi.out_s);
-    expect(bfi.out_s, "#\n");
   });
 
   test("deep bracketts", () {
