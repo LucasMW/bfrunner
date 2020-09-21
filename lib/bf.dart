@@ -3,7 +3,7 @@ import 'dart:convert' as convert;
 
 class BFI {
   var program = "";
-  var memory = Int8List(30000);
+  var memory = Uint8List(30000);
   // ignore: non_constant_identifier_names
   var mem_idx = 0;
   // ignore: non_constant_identifier_names
@@ -12,6 +12,7 @@ class BFI {
   // ignore: non_constant_identifier_names
   var out_s = "";
   var out = List<int>();
+  var err_s = "";
 
   // ignore: non_constant_identifier_names
   var input_s = "";
@@ -32,8 +33,10 @@ class BFI {
           mem_idx++;
           break;
         case '+':
-          memory[mem_idx]++;
-          if (memory[mem_idx] > 255) memory[mem_idx] = 0;
+          if (memory[mem_idx] > 254)
+            memory[mem_idx] = 0;
+          else
+            memory[mem_idx]++;
           break;
         case '-':
           memory[mem_idx]--;
@@ -47,7 +50,7 @@ class BFI {
           }
           break;
         case '.':
-          //print(memory[mem_idx]);
+          print(memory[mem_idx]);
           out.add(memory[mem_idx]);
           out_s += String.fromCharCode(memory[mem_idx]);
           //print(String.fromCharCode(memory[mem_idx]));
@@ -71,7 +74,7 @@ class BFI {
       prog_idx++;
     }
     out.add(0);
-    print(out);
+    //print(out);
 
     var str = convert.utf8.decode(out, allowMalformed: true);
 
