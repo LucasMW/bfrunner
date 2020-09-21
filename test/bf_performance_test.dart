@@ -22,16 +22,12 @@ void main() {
 
   test("factor ", () async {
     final program = BFAssets.factorBF();
-    print(program);
-
     final bfi = BFI();
     final inputNumber = 10;
     final factors = factor(inputNumber);
-    print(factors);
     bfi.input = List.from("$inputNumber\n".codeUnits);
     bfi.program = program;
     bfi.run();
-    //expect(bfi.out_s, "$inputNumber: 2 5\n");
     expect(bfi.out_s, factors);
   });
   test("prime ", () {
