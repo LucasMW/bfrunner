@@ -33,4 +33,21 @@ void main() {
     bfi.run();
     expect(bfi.out_s, "~zyx mlk");
   });
+  test("big enough", () {
+    final program =
+        "++++[>++++++<-]>[>+++++>+++++++<<-]>>++++<[[>[[>>+<<-]<]>>>-]>-[>+>+<<-]>]+++++[>+++++++<<++>-]>.<<.";
+    final bfi = BFI();
+    bfi.program = program;
+    bfi.run();
+    expect(bfi.out_s, "#\n");
+  });
+  test("Obscure", () {
+    final program =
+        '[]++++++++++[>>+>+>++++++[<<+<+++>>>-]<<<<-] "A*";?@![#>>+<<]>[>>]<<<<[>++<[-]]>.>.';
+    //'[]++++++++++[>>+>+>++++++[<<+<+++>>>-]<<<<-] "A*$";?@![#>>+<<]>[>>]<<<<[>++<[-]]>.>.';
+    final bfi = BFI();
+    bfi.program = program;
+    bfi.run();
+    expect(bfi.out_s, "H\n");
+  });
 }
