@@ -7,6 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:code_text_field/code_text_field.dart';
 
 import 'package:bf_runner/main.dart';
 
@@ -17,7 +18,11 @@ void main() {
     await tester.pumpWidget(MyApp());
     expect(find.text("Hello World"), findsNothing);
 
-    await tester.enterText(find.byType(TextField), program);
+    final field = find.byType(CodeField).evaluate().single.widget as CodeField;
+    field.controller.text = program;
+    await tester.pump();
+
+    //await tester.enterText(find.byType(CodeField), program);
 
     await tester.tap(find.byIcon(Icons.play_arrow));
     await tester.pump();
@@ -30,7 +35,10 @@ void main() {
 
     expect(find.text("Hello World"), findsNothing);
 
-    await tester.enterText(find.byType(TextField), program);
+    final field = find.byType(CodeField).evaluate().single.widget as CodeField;
+    field.controller.text = program;
+    await tester.pump();
+
     expect(find.text(program), findsOneWidget);
 
     await tester.tap(find.byIcon(Icons.play_arrow));
