@@ -12,12 +12,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'BF IDE 2',
+      title: 'BF IDE 2 | Full Fledged BF IDE',
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Full Fledged Brainfuck IDE'),
+      home: MyHomePage(title: 'Brainfuck IDE 2'),
     );
   }
 }
@@ -78,18 +78,23 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            SingleChildScrollView(
-              child: Container(
-                height: 300,
+      body: SafeArea(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                flex: 1,
                 child: codeField,
               ),
-            ),
-            Text('$_output', style: Theme.of(context).textTheme.headline5)
-          ],
+              Expanded(
+                  child: Container(
+                color: Colors.white,
+                child: Text('$_output',
+                    style: Theme.of(context).textTheme.headline5),
+              ))
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
