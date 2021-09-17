@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'bf.dart';
+import 'package:code_text_field/code_text_field.dart';
+import 'package:highlight/languages/brainfuck.dart';
+import 'package:flutter_highlight/themes/monokai-sublime.dart';
 
 void main() {
   runApp(MyApp());
@@ -34,16 +37,43 @@ class _MyHomePageState extends State<MyHomePage> {
       "++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.";
 
   void _run() {
+    var bfi = BFI();
+    bfi.program = _program;
+    bfi.run();
     setState(() {
-      var bfi = BFI();
-      bfi.program = _program;
-      bfi.run();
       _output = bfi.out_s;
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    final codeController = CodeController(
+        language: brainfuck,
+        text: _program,
+        theme: monokaiSublimeTheme,
+        onChange: (value) {
+          _program = value;
+        });
+    var codeField = CodeField(controller: codeController, wrap: true);
+    var textField = TextField(
+      inputFormatters: [],
+      obscureText: false,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(),
+        labelText: "Brainfuck Code",
+        helperMaxLines: 10,
+      ),
+      maxLines: 10,
+      minLines: 1,
+      onChanged: (value) {
+        _program = value;
+      },
+      maxLength: 10000,
+      onSubmitted: (String value) {
+        print(value);
+        _program = value;
+      },
+    );
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -55,24 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
             SingleChildScrollView(
               child: Container(
                 height: 300,
-                child: TextField(
-                  obscureText: false,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: "Brainfuck Code",
-                    helperMaxLines: 10,
-                  ),
-                  maxLines: 10,
-                  minLines: 1,
-                  onChanged: (value) {
-                    _program = value;
-                  },
-                  maxLength: 10000,
-                  onSubmitted: (String value) {
-                    print(value);
-                    _program = value;
-                  },
-                ),
+                child: codeField,
               ),
             ),
             Text('$_output', style: Theme.of(context).textTheme.headline5)

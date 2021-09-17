@@ -11,14 +11,14 @@ class BFI {
 
   // ignore: non_constant_identifier_names
   var out_s = "";
-  var out = List<int>();
+  var out = <int>[];
   var err_s = "";
 
   // ignore: non_constant_identifier_names
   var input_s = "";
-  var input = List<int>();
+  var input = <int>[];
 
-  var loopStack = List<int>();
+  var loopStack = <int>[];
   var loopIdx = 0;
   void run() {
     while (prog_idx < program.length) {
