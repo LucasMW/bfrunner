@@ -21,3 +21,5 @@ jobs:
     - run: flutter test
     - run: flutter build apk
     - run: flutter build ios --release --no-codesign
+    - run: flutter build ipa
+    - run: flutter build macos
