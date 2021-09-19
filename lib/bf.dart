@@ -1,7 +1,11 @@
+import 'dart:io';
 import 'dart:typed_data';
 import 'dart:convert' as convert;
 
 class BFI {
+  final bool shouldWaitInput;
+  bool paused = false;
+
   var program = "";
   var memory = Uint8List(30000);
   // ignore: non_constant_identifier_names
@@ -20,6 +24,8 @@ class BFI {
 
   var loopStack = <int>[];
   var loopIdx = 0;
+
+  BFI({this.shouldWaitInput});
   void run() {
     while (prog_idx < program.length) {
       var cmd = String.fromCharCode(program.codeUnitAt(prog_idx));
@@ -46,14 +52,16 @@ class BFI {
           if (input.length > 0) {
             memory[mem_idx] = input.removeAt(0);
           } else {
-            memory[mem_idx] = 0;
+            if (shouldWaitInput == true) {
+              return; //the idea is to keep going after input, by calling run again;
+            } else {
+              memory[mem_idx] = 0;
+            }
           }
           break;
         case '.':
-          print(memory[mem_idx]);
           out.add(memory[mem_idx]);
           out_s += String.fromCharCode(memory[mem_idx]);
-          //print(String.fromCharCode(memory[mem_idx]));
           break;
         case '[':
           if (memory[mem_idx] == 0) {
@@ -74,12 +82,6 @@ class BFI {
       prog_idx++;
     }
     out.add(0);
-    //print(out);
-
-    var str = convert.utf8.decode(out, allowMalformed: true);
-
-    print("str: $str");
-    print("out_s $out_s");
   }
 
   String charAtIndex(String str, int index) {
@@ -93,7 +95,6 @@ class BFI {
     var cmd = String.fromCharCode(program.codeUnitAt(prog_idx));
     // while not match stop requirements
     while (!(cmd == ']' && internalLoopCount == 0)) {
-      print(prog_idx);
       if (cmd == '[') {
         internalLoopCount++;
       } else if (cmd == ']') {
