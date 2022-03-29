@@ -54,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onChange: (value) {
           _program = value;
         });
-    var codeField = CodeField(controller: codeController, wrap: true);
+    var codeField = CodeField(controller: codeController, wrap: false);
     var textField = TextField(
       inputFormatters: [],
       obscureText: false,
