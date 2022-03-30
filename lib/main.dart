@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
@@ -35,9 +35,10 @@ class _MyHomePageState extends State<MyHomePage> {
   String _output = "";
   String _program =
       "++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.";
+  BFI bfi = BFI(shouldWaitInput: true);
 
   void _run() {
-    var bfi = BFI();
+    bfi = BFI(shouldWaitInput: true);
     bfi.program = _program;
     bfi.run();
     setState(() {
@@ -55,6 +56,42 @@ class _MyHomePageState extends State<MyHomePage> {
           _program = value;
         });
     var codeField = CodeField(controller: codeController, wrap: false);
+    final inputController = TextEditingController();
+    final inputField = TextField(
+      controller: inputController,
+      inputFormatters: [],
+      obscureText: false,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(),
+        labelText: "Input",
+        helperMaxLines: 2,
+      ),
+      maxLines: 2,
+      minLines: 1,
+      onChanged: (value) {
+        if (value.contains("\n")) {
+          final chars = value.split("\n").first + "\n";
+          print("submitted $chars");
+          bfi.receiveInput(chars);
+          inputController.clear();
+          setState(() {});
+          bfi.run();
+          setState(() {
+            _output = bfi.out_s;
+          });
+          return;
+        }
+      },
+      maxLength: 10000,
+      onSubmitted: (String value) {
+        print("submitted");
+        bfi.receiveInput(value);
+        bfi.run();
+        setState(() {
+          _output = bfi.out_s;
+        });
+      },
+    );
     var textField = TextField(
       inputFormatters: [],
       obscureText: false,
@@ -85,13 +122,25 @@ class _MyHomePageState extends State<MyHomePage> {
             children: <Widget>[
               Expanded(
                 flex: 1,
-                child: codeField,
+                child: SizedBox(
+                  height: MediaQuery.of(context).size.height * 1,
+                  child: SingleChildScrollView(
+                    child: SizedBox(
+                        height: MediaQuery.of(context).size.height * 5,
+                        child: codeField),
+                  ),
+                ),
               ),
               Expanded(
-                  child: Container(
-                color: Colors.white,
-                child: Text('$_output',
-                    style: Theme.of(context).textTheme.headline5),
+                  child: Column(
+                children: [
+                  bfi.waitingInput ? inputField : Container(),
+                  Container(
+                    color: Colors.white,
+                    child: Text('$_output',
+                        style: Theme.of(context).textTheme.headline5),
+                  ),
+                ],
               ))
             ],
           ),
