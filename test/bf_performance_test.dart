@@ -22,7 +22,7 @@ void main() {
 
   test("factor ", () async {
     final program = BFAssets.factorBF();
-    final bfi = BFI();
+    final bfi = BFI(shouldWaitInput: false);
     final inputNumber = 10;
     final factors = factor(inputNumber);
     bfi.input = List.from("$inputNumber\n".codeUnits);
@@ -32,7 +32,7 @@ void main() {
   });
   test("prime ", () {
     final program = BFAssets.primeBF();
-    final bfi = BFI();
+    final bfi = BFI(shouldWaitInput: false);
     bfi.program = program;
     bfi.input = List.from("10\n".codeUnits);
     bfi.run();

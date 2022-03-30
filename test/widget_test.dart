@@ -28,21 +28,4 @@ void main() {
     await tester.pump();
     expect(find.text("Hello World!\n"), findsOneWidget);
   });
-  testWidgets("Performance", (WidgetTester tester) async {
-    final program =
-        '++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>.';
-    await tester.pumpWidget(MyApp());
-
-    expect(find.text("Hello World"), findsNothing);
-
-    final field = find.byType(CodeField).evaluate().single.widget as CodeField;
-    field.controller.text = program;
-    await tester.pump();
-
-    expect(find.text(program), findsOneWidget);
-
-    await tester.tap(find.byIcon(Icons.play_arrow));
-    await tester.pump();
-    expect(find.text("Hello World!\n"), findsOneWidget);
-  });
 }

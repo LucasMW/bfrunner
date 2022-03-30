@@ -5,7 +5,7 @@ void main() {
   test("hello ", () {
     final program =
         '++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>.';
-    final bfi = BFI();
+    final bfi = BFI(shouldWaitInput: false);
     bfi.program = program;
     bfi.run();
     expect(bfi.out_s, "Hello World!\n");
@@ -13,7 +13,7 @@ void main() {
   test("input", () {
     final program =
         ">,>+++++++++,>+++++++++++[<++++++<++++++<+>>>-]<<.>.<<-.>.>.<<.";
-    final bfi = BFI();
+    final bfi = BFI(shouldWaitInput: false);
     bfi.program = program;
     bfi.input = List.from("\n".codeUnits);
     bfi.run();
@@ -27,7 +27,7 @@ void main() {
   test("deep bracketts", () {
     final program =
         ",[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>++++++++++++++<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>>+++++[<----->-]<<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>++++++++++++++<-[>+<-[>+<-[>+<-[>+<-[>+<-[>++++++++++++++<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>>+++++[<----->-]<<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>++++++++++++++<-[>+<-]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]>.[-]<,]";
-    final bfi = BFI();
+    final bfi = BFI(shouldWaitInput: false);
     bfi.program = program;
     bfi.input = List.from("~mlk zyx".codeUnits);
     bfi.run();
@@ -36,7 +36,7 @@ void main() {
   test("big enough", () {
     final program =
         "++++[>++++++<-]>[>+++++>+++++++<<-]>>++++<[[>[[>>+<<-]<]>>>-]>-[>+>+<<-]>]+++++[>+++++++<<++>-]>.<<.";
-    final bfi = BFI();
+    final bfi = BFI(shouldWaitInput: false);
     bfi.program = program;
     bfi.run();
     expect(bfi.out_s, "#\n");
@@ -45,7 +45,7 @@ void main() {
     final program =
         '[]++++++++++[>>+>+>++++++[<<+<+++>>>-]<<<<-] "A*";?@![#>>+<<]>[>>]<<<<[>++<[-]]>.>.';
     //'[]++++++++++[>>+>+>++++++[<<+<+++>>>-]<<<<-] "A*$";?@![#>>+<<]>[>>]<<<<[>++<[-]]>.>.';
-    final bfi = BFI();
+    final bfi = BFI(shouldWaitInput: false);
     bfi.program = program;
     bfi.run();
     expect(bfi.out_s, "H\n");
@@ -64,7 +64,7 @@ void main() {
 
   test("Wrapping", () {
     final program = "-.";
-    final bfi = BFI();
+    final bfi = BFI(shouldWaitInput: false);
     bfi.program = program;
     bfi.run();
     expect(bfi.out_s, String.fromCharCode(255));
@@ -88,7 +88,7 @@ CL
 ]end while
 
     """;
-    final bfi = BFI();
+    final bfi = BFI(shouldWaitInput: false);
     bfi.program = program;
     bfi.run();
     expect(bfi.out_s, overflow());
