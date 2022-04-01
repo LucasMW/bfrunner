@@ -92,7 +92,8 @@ class _MyHomePageState extends State<MyHomePage> {
         });
       },
     );
-    var textField = TextField(
+    final textField = TextField(
+      controller: TextEditingController(),
       inputFormatters: [],
       obscureText: false,
       decoration: InputDecoration(
@@ -100,14 +101,13 @@ class _MyHomePageState extends State<MyHomePage> {
         labelText: "Brainfuck Code",
         helperMaxLines: 10,
       ),
-      maxLines: 10,
+      maxLines: 1000,
       minLines: 1,
       onChanged: (value) {
         _program = value;
       },
-      maxLength: 10000,
+      maxLength: 1000000,
       onSubmitted: (String value) {
-        print(value);
         _program = value;
       },
     );
@@ -132,15 +132,34 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               Expanded(
-                  child: Column(
-                children: [
-                  bfi.waitingInput ? inputField : Container(),
-                  Container(
-                    color: Colors.white,
-                    child: Text('$_output',
-                        style: Theme.of(context).textTheme.headline5),
-                  ),
-                ],
+                  child: SingleChildScrollView(
+                controller:
+                    ScrollController(), //https://stackoverflow.com/questions/69883594/flutter-linuix-the-provided-scrollcontroller-is-currently-attached-to-more-than
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        color: Colors.white,
+                        child: Text('$_output',
+                            textAlign: TextAlign.left,
+                            style: Theme.of(context).textTheme.headline5),
+                      ),
+                    ),
+                    bfi.waitingInput
+                        ? Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Center(
+                              child: SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.5,
+                                child: inputField,
+                              ),
+                            ),
+                          )
+                        : Container(),
+                  ],
+                ),
               ))
             ],
           ),

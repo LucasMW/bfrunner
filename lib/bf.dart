@@ -72,10 +72,10 @@ class BFI {
           }
           break;
         case '.':
-          print(memory[mem_idx]);
+          //print(memory[mem_idx]);
           out.add(memory[mem_idx]);
           out_s += String.fromCharCode(memory[mem_idx]);
-          print(out_s);
+          //print(out_s);
           break;
         case '[':
           if (memory[mem_idx] == 0) {
