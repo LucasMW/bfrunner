@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'bf.dart';
 import 'package:code_text_field/code_text_field.dart';
 import 'package:highlight/languages/brainfuck.dart';
+import 'package:highlight/languages/cpp.dart';
 import 'package:flutter_highlight/themes/monokai-sublime.dart';
 
 void main() {
@@ -14,6 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'BF IDE 2 | Full Fledged BF IDE',
       theme: ThemeData(
+        useMaterial3: false,
         primarySwatch: Colors.deepPurple,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
@@ -46,10 +50,26 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  Future<void> runC() async {
+    var dir = Directory.systemTemp.createTempSync();
+    var temp = File("${dir.path}/pika.c");
+    var temp2 = File("${dir.path}/a.out");
+    temp.createSync();
+    temp.writeAsStringSync(_program);
+    try {
+      // final p = await Process.start(
+      //     "/usr/local/bin/zig", ["cc", temp.path, "-o", temp2.path]);
+      final p1 = await Process.start('/usr/local/bin/zig', ["--help"]);
+      print(p1.stdout);
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final codeController = CodeController(
-        language: brainfuck,
+        language: cpp,
         text: _program,
         theme: monokaiSublimeTheme,
         onChange: (value) {
@@ -166,7 +186,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _run,
+        onPressed: runC,
         tooltip: 'Play!',
         child: Icon(Icons.play_arrow),
       ),
